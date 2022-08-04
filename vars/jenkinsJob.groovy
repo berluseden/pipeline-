@@ -1,28 +1,27 @@
-def call(Map pipelineParams) {
-    pipeline {
-        agent any
-        
-       stages('Checkout') {
+def call(){
+    node {
+        stage('Checkout') {
             checkout scm
         }
 
-       stage {
-            stage('docker build') {
-                steps {
-                    script {
-                        dockerLib.build(DockerfilePath: pipelineParams.dockerfilePath,
-                                        DockerImage: pipelineParams.dockerImage,
-                                        
-                    }
-                }
-            }
-            stage('docker push') {
-                steps {
-                    script {
-                        dockerLib.push(DockerImage: pipelineParams.dockerImage)
-                    }
-                }
-            }
+        // Execute different stages depending on the job
+        if(env.JOB_NAME.contains("deploy")){
+            dockerBuildAndPublish()
+        } else if(env.JOB_NAME.contains("test")) {
+            buildAndTest()
         }
+    }
+}
+
+def dockerBuildAndPublish(){
+    stage("dockerBuild") {
+        sh 'docker build -t berluseden/demojenkins:latest .'
+        sh 'docker push berluseden/demojenkins:latest'
+    }
+}
+
+def buildAndTest(){
+    stage("Backend tests"){
+        sh "mvn test"
     }
 }
