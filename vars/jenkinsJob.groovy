@@ -12,7 +12,7 @@ def call(Map pipelineParams) {
                     script {
                         dockerLib.build(DockerfilePath: pipelineParams.dockerfilePath,
                                         DockerImage: pipelineParams.dockerImage,
-                                        DockerContext: pipelineParams.dockerContext)
+                                        
                     }
                 }
             }
