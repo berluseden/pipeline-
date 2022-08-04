@@ -19,9 +19,3 @@ def dockerBuildAndPublish(){
         sh 'docker push berluseden/demojenkins:1.0.0-${BUILD_ID}'
     }
 }
-
-def buildAndTest(){
-    stage("Backend tests"){
-        sh "mvn test"
-    }
-}
