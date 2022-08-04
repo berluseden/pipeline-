@@ -15,8 +15,8 @@ def call(){
 
 def dockerBuildAndPublish(){
     stage("dockerBuild") {
-        sh 'docker build -t berluseden/demojenkins:latest .'
-        sh 'docker push berluseden/demojenkins:latest'
+        sh 'docker build -t berluseden/demojenkins:1.0.0-${BUILD_ID} .'
+        sh 'docker push berluseden/demojenkins:1.0.0-${BUILD_ID}'
     }
 }
 
