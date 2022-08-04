@@ -6,16 +6,17 @@ def call(){
 
         // Execute different stages depending on the job
         if(env.JOB_NAME.contains("deploy")){
-            packageArtifact()
+            dockerBuildAndPublish()
         } else if(env.JOB_NAME.contains("test")) {
             buildAndTest()
         }
     }
 }
 
-def packageArtifact(){
-    stage("Package artifact") {
-        sh "mvn package"
+def dockerBuildAndPublish(){
+    stage("dockerBuild") {
+        repositoryName('berluseden/demojenkins')
+        registryCredentials('dockerhub')
     }
 }
 
