@@ -19,6 +19,19 @@ def createDeploymentJob(jobName, repoUrl) {
     }
 }
 
+def createTestJob(jobName, repoUrl) {
+    multibranchPipelineJob(jobName) {
+        branchSources {
+            git {
+                remote(repoUrl)
+                includes('*')
+            }
+        }
+        triggers {
+            cron("H/5 * * * *")
+        }
+    }
+}
 
 def buildPipelineJobs() {
     def repo = "https://github.com/berluseden/"
