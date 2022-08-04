@@ -7,7 +7,7 @@ job('DockerBuildandPublishDSL') {
             wrappers {
                 preBuildCleanup()
             } 
-            branch('*/' + 'master')
+            branch('*/' + 'main')
         }
     }
 
