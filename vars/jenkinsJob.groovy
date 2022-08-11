@@ -13,9 +13,7 @@ def call(){
     }
 }
 
-def dockerBuildAndPublish(){
-    stage("dockerBuild") {
-        sh 'docker build -t berluseden/demojenkins:1.0.0-${BUILD_ID} .'
-        sh 'docker push berluseden/demojenkins:1.0.0-${BUILD_ID}'
-    }
-}
+    stage('dockerBuild') {
+                    
+                    dockerBuildAndPublish()
+                }
