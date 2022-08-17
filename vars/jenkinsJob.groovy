@@ -6,14 +6,23 @@ def call(){
 
         // Execute different stages depending on the job
         if(env.JOB_NAME.contains("deploy")){
-            dockerBuildAndPublish()
+            packageArtifact()
         } else if(env.JOB_NAME.contains("test")) {
             buildAndTest()
         }
     }
 }
 
-    stage('dockerBuild') {
-                    
-                    dockerBuildAndPublish()
-                }
+def packageArtifact(){
+    stage("Package artifact") {
+        sh 'docker build -t berluseden/demojenkins:1.0.0-${BUILD_ID} .'
+        sh 'docker push berluseden/demojenkins:1.0.0-${BUILD_ID}'
+    }
+}
+
+def buildAndTest(){
+    stage("Backend tests"){
+        sh 'docker build -t berluseden/demojenkins:1.0.0-${BUILD_ID} .'
+        sh 'docker push berluseden/demojenkins:1.0.0-${BUILD_ID}'
+    }
+}
